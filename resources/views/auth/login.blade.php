@@ -3,216 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - School System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .login-container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        .login-card {
             width: 100%;
-            max-width: 400px;
-            padding: 40px;
+            max-width: 420px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
         .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
             text-align: center;
-            margin-bottom: 30px;
         }
 
         .login-header h1 {
-            color: #333;
             font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            font-weight: 700;
         }
 
-        .login-header p {
-            color: #666;
-            font-size: 14px;
+        .login-body {
+            padding: 40px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            outline: none;
+        .form-control:focus {
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
 
-        .error-message {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 5px;
-        }
-
-        .form-group.error input {
-            border-color: #e74c3c;
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 12px;
+        .btn-login {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            padding: 12px;
             font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
             margin-top: 20px;
         }
 
-        .login-button:hover {
+        .btn-login:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f94 100%);
             transform: translateY(-2px);
         }
 
-        .login-button:active {
-            transform: translateY(0);
-        }
-
-        .alert {
-            padding: 12px 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .demo-credentials {
+        .demo-box {
             background: #f0f4ff;
             border-left: 4px solid #667eea;
             padding: 15px;
             border-radius: 5px;
             margin-top: 25px;
+        }
+
+        .demo-box h5 {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .demo-box p {
+            color: #555;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
         }
 
-        .demo-credentials h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .demo-credentials p {
-            color: #555;
-            margin: 5px 0;
-            font-family: monospace;
-        }
-
-        .demo-credentials strong {
+        .demo-box strong {
             color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="login-card card">
         <div class="login-header">
-            <h1>School System</h1>
-            <p>Login to your account</p>
+            <h1>📚 School System</h1>
+            <p class="mb-0">Login to your account</p>
         </div>
 
-        @if ($errors->any())
-            <div class="alert alert-error">
-                @foreach ($errors->all() as $error)
-                    <div>{{ $error }}</div>
-                @endforeach
+        <div class="login-body">
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('login') }}" novalidate>
+                @csrf
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input 
+                        type="email" 
+                        class="form-control @error('email') is-invalid @enderror" 
+                        id="email" 
+                        name="email" 
+                        value="{{ old('email') }}"
+                        placeholder="Enter your email"
+                        required 
+                        autofocus
+                    >
+                    @error('email')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input 
+                        type="password" 
+                        class="form-control @error('password') is-invalid @enderror" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                    @error('password')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-login w-100">Sign In</button>
+            </form>
+
+            <div class="demo-box">
+                <h5>Demo Credentials:</h5>
+                <p><strong>Admin:</strong> admin@example.com / admin123</p>
+                <p><strong>User:</strong> user@example.com / password123</p>
             </div>
-        @endif
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div class="form-group @error('email') error @enderror">
-                <label for="email">Email Address</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value="{{ old('email') }}"
-                    required 
-                    autofocus
-                    placeholder="Enter your email"
-                >
-                @error('email')
-                    <div class="error-message">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group @error('password') error @enderror">
-                <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    required
-                    placeholder="Enter your password"
-                >
-                @error('password')
-                    <div class="error-message">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <button type="submit" class="login-button">Sign In</button>
-        </form>
-
-        <div class="demo-credentials">
-            <h3>Demo Credentials:</h3>
-            <p><strong>Admin:</strong> admin@example.com / admin123</p>
-            <p><strong>User:</strong> user@example.com / password123</p>
         </div>
     </div>
-</body>
-</html>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
