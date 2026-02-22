@@ -6,7 +6,7 @@
     <title>School Fees - {{ $currentYear }}</title>
     <style>
         * {
-            margin: 0;
+            margin: 2px;
             padding: 0;
             box-sizing: border-box;
         }
