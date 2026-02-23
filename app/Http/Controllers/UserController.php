@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -74,5 +75,27 @@ class UserController extends Controller
         $userName = $user->name;
         $user->delete();
         return redirect()->route('users.index')->with('success', "User '$userName' has been deleted.");
+    }
+
+    /**
+     * Store a newly created user (Admin only)
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|in:admin,user',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
+        ]);
+
+        return redirect()->route('users.index')->with('success', "User '{$user->name}' created successfully.");
     }
 }

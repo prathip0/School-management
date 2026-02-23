@@ -3,140 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - School System</title>
+    <title>Dashboard - School Fee Management</title>
+    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --crimson: #c41e3a;
+            --crimson-dark: #a01530;
+            --crimson-light: #f9e8eb;
+            --text-dark: #1a1a1a;
+            --text-mid: #444;
+            --text-light: #777;
+            --border: #e5e5e5;
+            --bg-light: #f7f7f5;
+            --white: #ffffff;
+        }
+
         body {
-            background: #f5f7fa;
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
-        .navbar-custom {
-            background: white;
+        /* Navbar Styles */
+        .navbar {
+            background: var(--white);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px solid #667eea;
+            padding: 0;
+            border-bottom: 3px solid var(--crimson);
         }
 
-        .navbar-brand {
-            color: #667eea !important;
-            font-size: 22px;
-            font-weight: 700;
+        .navbar-top {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 0;
         }
 
-        .role-badge.admin {
-            background: #e74c3c !important;
+        .navbar-top .top-links a {
+            font-size: 13px;
+            color: var(--text-mid);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color .2s;
         }
 
-        .role-badge.user {
-            background: #3498db !important;
-        }
+        .navbar-top .top-links a:hover { color: var(--crimson); }
 
-        .sidebar {
-            background: #2c3e50;
-            min-height: calc(100vh - 70px);
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar-title {
-            color: white;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            opacity: 0.7;
-            padding: 0 15px;
-        }
-
-        .nav-menu {
-            list-style: none;
-            margin-bottom: 30px;
-            padding-left: 0;
-        }
-
-        .nav-item {
-            margin-bottom: 5px;
-        }
-
-        .nav-link-custom {
+        .navbar-brand-wrap {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            color: #ecf0f1;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s;
+            gap: 12px;
+            padding: 12px 0;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            background: var(--crimson);
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .brand-logo i { color: white; font-size: 20px; }
+
+        .brand-text strong {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--text-dark);
+            line-height: 1.1;
+        }
+
+        .brand-text small {
+            font-size: 11px;
+            color: var(--text-light);
+            letter-spacing: .5px;
+        }
+
+        .nav-main {
+            margin-left: auto;
+        }
+
+        .nav-main .nav-link {
             font-size: 14px;
-        }
-
-        .nav-link-custom:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .nav-link-custom.active {
-            background: #667eea;
-            color: white;
+            color: var(--text-mid);
             font-weight: 600;
+            padding: 20px 16px !important;
+            position: relative;
+            transition: color .2s;
         }
 
-        .nav-link-custom .icon {
-            margin-right: 10px;
+        .nav-main .nav-link:hover,
+        .nav-main .nav-link.active {
+            color: var(--crimson);
+        }
+
+        .nav-main .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 16px;
+            right: 16px;
+            height: 3px;
+            background: var(--crimson);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0 10px 20px;
+            border-left: 1px solid var(--border);
+            margin-left: 15px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-dark);
+            display: block;
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role-badge {
+            width: 40px;
+            height: 40px;
+            background: var(--crimson-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--crimson);
+            font-weight: 700;
             font-size: 16px;
         }
 
-        .main-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
+        .btn-logout {
+            background: none;
+            border: 1.5px solid var(--border);
+            color: var(--text-mid);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 4px;
+            transition: all .2s;
         }
 
-        .content-area {
+        .btn-logout:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+            background: var(--crimson-light);
+        }
+
+        /* Main Content */
+        .main-content {
             flex: 1;
             padding: 40px 20px;
-            overflow-y: auto;
         }
 
         .welcome-card {
-            background: white;
+            background: var(--white);
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            border: 1px solid var(--border);
         }
 
         .welcome-card h1 {
-            color: #333;
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
             margin-bottom: 15px;
+            font-size: 28px;
         }
 
         .welcome-card > p {
-            color: #666;
+            color: var(--text-mid);
             line-height: 1.6;
             margin-bottom: 20px;
         }
 
         .user-details {
-            background: #f0f4ff;
-            border-left: 4px solid #667eea;
+            background: var(--crimson-light);
+            border-left: 4px solid var(--crimson);
             padding: 20px;
             border-radius: 5px;
             margin-top: 20px;
         }
 
         .user-details h3 {
-            color: #667eea;
+            color: var(--crimson);
             margin-bottom: 15px;
             font-size: 16px;
+            font-weight: 700;
         }
 
         .detail-item {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.15);
         }
 
         .detail-item:last-child {
@@ -144,273 +230,270 @@
         }
 
         .detail-label {
-            color: #666;
+            color: var(--text-mid);
             font-weight: 600;
         }
 
         .detail-value {
-            color: #333;
+            color: var(--text-dark);
             font-weight: 500;
         }
 
-        .admin-menu {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--crimson);
         }
 
-        .admin-menu h2 {
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 20px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .menu-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--crimson) 0%, var(--crimson-dark) 100%);
             color: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
             text-decoration: none;
             transition: all 0.3s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 150px;
-            height: 100%;
+            border: none;
+            position: relative;
+            overflow: hidden;
         }
 
         .menu-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px rgba(196, 30, 58, 0.3);
             color: white;
-            text-decoration: none;
+        }
+
+        .menu-card.alt {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2632 100%);
+        }
+
+        .menu-card.alt:hover {
+            box-shadow: 0 15px 30px rgba(44, 62, 80, 0.3);
         }
 
         .menu-card-icon {
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 40px;
+            margin-bottom: 15px;
         }
 
         .menu-card h3 {
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: 700;
             margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
         }
 
         .menu-card p {
             font-size: 13px;
             opacity: 0.9;
             margin-bottom: 0;
+            line-height: 1.5;
         }
 
-        .menu-card.manage {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        .btn-view {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            opacity: 0.7;
+            transition: opacity .2s;
         }
 
-        .menu-card.calculator {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .menu-card:hover .btn-view {
+            opacity: 1;
         }
 
-        .menu-card.users-card {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        @media (max-width: 991px) {
+            .navbar-brand-wrap {
+                padding: 10px 0;
+            }
+            
+            .nav-main .nav-link {
+                padding: 15px 12px !important;
+            }
+            
+            .user-menu {
+                padding-left: 10px;
+                margin-left: 10px;
+            }
         }
 
         @media (max-width: 768px) {
-            .main-wrapper {
+            .navbar-brand-wrap {
                 flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
             }
-
-            .sidebar {
-                padding: 15px;
-                min-height: auto;
-                overflow-x: auto;
+            
+            .user-menu {
+                border-left: none;
+                padding-left: 0;
+                margin-left: 0;
             }
-
-            .nav-menu {
-                display: flex;
-                gap: 10px;
-                margin-bottom: 15px;
-                flex-wrap: wrap;
-            }
-
-            .nav-link-custom {
-                white-space: nowrap;
-            }
-
-            .content-area {
-                padding: 20px 15px;
-            }
-
-            .welcome-card {
-                padding: 20px;
-            }
-
-            .admin-menu {
-                padding: 20px;
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid px-4">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">📚 School System</a>
-            <div class="d-flex align-items-center gap-3">
-                <div class="d-flex align-items-center gap-2">
-                    <span class="fw-semibold">{{ auth()->user()->name }}</span>
-                    <span class="badge role-badge {{ auth()->user()->role }}">{{ strtoupper(auth()->user()->role) }}</span>
+            <div class="navbar-brand-wrap">
+                <div class="brand-logo">
+                    <i class="bi bi-mortarboard-fill"></i>
                 </div>
-                <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                </form>
+                <div class="brand-text">
+                    <strong>School Fee Management</strong>
+                    <small>Fee Management System</small>
+                </div>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav nav-main">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('dashboard') }}">
+                            <i class="bi bi-house-door me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('fees.index') }}">
+                            <i class="bi bi-cash-stack me-1"></i> Fee Structure
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('fees.calculator') }}">
+                            <i class="bi bi-calculator me-1"></i> Calculator
+                        </a>
+                    </li>
+                    @if(auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('fees.manage') }}">
+                            <i class="bi bi-gear me-1"></i> Manage Fees
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.index') }}">
+                            <i class="bi bi-people me-1"></i> Users
+                        </a>
+                    </li>
+                    @endif
+                </ul>
+
+                <div class="user-menu">
+                    <div class="user-info">
+                        <span class="user-name">{{ auth()->user()->name }}</span>
+                        <span class="user-role">{{ auth()->user()->role }}</span>
+                    </div>
+                    <div class="role-badge">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn-logout">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="main-wrapper">
-        <!-- Sidebar Navigation -->
-        <div class="sidebar">
-            <div class="sidebar-title">Menu</div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link-custom active">
-                        <span class="icon">🏠</span> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('fees.index') }}" class="nav-link-custom">
-                        <span class="icon">💰</span> View Fees
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('fees.calculator') }}" class="nav-link-custom">
-                        <span class="icon">🧮</span> Fee Calculator
-                    </a>
-                </li>
-            </ul>
-
-            @if(auth()->user()->role === 'admin')
-                <div class="sidebar-title">Admin Panel</div>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="{{ route('fees.manage') }}" class="nav-link-custom">
-                            <span class="icon">⚙️</span> Manage Fees
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link-custom">
-                            <span class="icon">👥</span> Users
-                        </a>
-                    </li>
-                </ul>
-            @endif
-        </div>
-
-        <!-- Main Content -->
-        <div class="content-area">
-            <div class="container-fluid">
-                <div class="welcome-card">
-                    <h1>Welcome, {{ auth()->user()->name }}! 👋</h1>
-                    <p>You have successfully logged in to the School Management System.</p>
-                    
-                    <div class="user-details">
-                        <h3>Your Account Information</h3>
-                        <div class="detail-item">
-                            <span class="detail-label">Name:</span>
-                            <span class="detail-value">{{ auth()->user()->name }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Email:</span>
-                            <span class="detail-value">{{ auth()->user()->email }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Role:</span>
-                            <span class="detail-value">{{ ucfirst(auth()->user()->role) }}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Member Since:</span>
-                            <span class="detail-value">{{ auth()->user()->created_at->format('d M, Y') }}</span>
-                        </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid px-4">
+            <div class="welcome-card">
+                <h1>Welcome back, {{ auth()->user()->name }}! 👋</h1>
+                <p>You have successfully logged in to the School Fee Management Fee Management System.</p>
+                
+                <div class="user-details">
+                    <h3>Your Account Information</h3>
+                    <div class="detail-item">
+                        <span class="detail-label">Name:</span>
+                        <span class="detail-value">{{ auth()->user()->name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Email:</span>
+                        <span class="detail-value">{{ auth()->user()->email }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Role:</span>
+                        <span class="detail-value">{{ ucfirst(auth()->user()->role) }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Member Since:</span>
+                        <span class="detail-value">{{ auth()->user()->created_at->format('d M, Y') }}</span>
                     </div>
                 </div>
-
-                @if(auth()->user()->role === 'admin')
-                    <div class="admin-menu">
-                        <h2>⚙️ Admin Management</h2>
-                        <div class="row g-3">
-                            <div class="col-12 col-sm-6 col-lg-3">
-                                <a href="{{ route('fees.index') }}" class="menu-card">
-                                    <div>
-                                        <div class="menu-card-icon">💰</div>
-                                        <h3>View All Fees</h3>
-                                        <p>View school fees for all age groups</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-lg-3">
-                                <a href="{{ route('fees.manage') }}" class="menu-card manage">
-                                    <div>
-                                        <div class="menu-card-icon">⚙️</div>
-                                        <h3>Manage Fees</h3>
-                                        <p>Create and update fee categories and amounts</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-lg-3">
-                                <a href="{{ route('fees.calculator') }}" class="menu-card calculator">
-                                    <div>
-                                        <div class="menu-card-icon">🧮</div>
-                                        <h3>Fee Calculator</h3>
-                                        <p>Calculate fees for multiple students</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-12 col-sm-6 col-lg-3">
-                                <a href="{{ route('users.index') }}" class="menu-card users-card">
-                                    <div>
-                                        <div class="menu-card-icon">👥</div>
-                                        <h3>Manage Users</h3>
-                                        <p>Create, view and manage user accounts</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <div class="admin-menu">
-                        <h2>Quick Access</h2>
-                        <div class="row g-3">
-                            <div class="col-12 col-sm-6">
-                                <a href="{{ route('fees.index') }}" class="menu-card">
-                                    <div>
-                                        <div class="menu-card-icon">💰</div>
-                                        <h3>School Fees</h3>
-                                        <p>View school fees structure</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-12 col-sm-6">
-                                <a href="{{ route('fees.calculator') }}" class="menu-card calculator">
-                                    <div>
-                                        <div class="menu-card-icon">🧮</div>
-                                        <h3>Calculate My Fees</h3>
-                                        <p>Calculate your child's fees</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                @endif
             </div>
+
+            @if(auth()->user()->role === 'admin')
+                <h2 class="section-title">Administration</h2>
+                <div class="menu-grid">
+                    <a href="{{ route('fees.index') }}" class="menu-card">
+                        <div class="menu-card-icon">💰</div>
+                        <h3>Fee Structure</h3>
+                        <p>View all school fees across different age groups and categories</p>
+                        <span class="btn-view"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+
+                    <a href="{{ route('fees.manage') }}" class="menu-card">
+                        <div class="menu-card-icon">⚙️</div>
+                        <h3>Manage Fees</h3>
+                        <p>Create, update and manage fee categories and payment amounts</p>
+                        <span class="btn-view"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+
+                    <a href="{{ route('fees.calculator') }}" class="menu-card alt">
+                        <div class="menu-card-icon">🧮</div>
+                        <h3>Fee Calculator</h3>
+                        <p>Calculate total fees for multiple children with payment options</p>
+                        <span class="btn-view"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+
+                    <a href="{{ route('users.index') }}" class="menu-card alt">
+                        <div class="menu-card-icon">👥</div>
+                        <h3>User Management</h3>
+                        <p>Manage system users, roles and permissions</p>
+                        <span class="btn-view"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+                </div>
+            @else
+                <h2 class="section-title">Quick Access</h2>
+                <div class="menu-grid">
+                    <a href="{{ route('fees.index') }}" class="menu-card">
+                        <div class="menu-card-icon">💰</div>
+                        <h3>Fee Structure</h3>
+                        <p>View complete school fee structure and payment options</p>
+                        <span class="btn-view"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+
+                    <a href="{{ route('fees.calculator') }}" class="menu-card alt">
+                        <div class="menu-card-icon">🧮</div>
+                        <h3>Fee Calculator</h3>
+                        <p>Calculate fees for your children with annual or termly options</p>
+                        <span class="btn-view"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 
